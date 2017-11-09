@@ -1,7 +1,7 @@
 const express = require('express');
 const port = 8080; 
 const mongoose = require('mongoose'); 
-mongoose.connect( 'mongodb://u7rs6a1pnwqmkbs:ihvyP7tNM63lY5V6JIH7@b4pfr4tuuy0c6qe-',
+mongoose.connect( 'mongodb.services.clever-cloud.com:27017/b4pfr4tuuy0c6qe',
   {
     useMongoClient: true,
     poolSize: 2,
