@@ -1,23 +1,13 @@
 const express = require('express');
 const port = 8080; 
 const mongoose = require('mongoose'); 
-const options = {
-  useMongoClient: true, 
-  server: { 
-    socketOptions: { 
-      keepAlive: 300000, 
-      connectTimeoutMS: 30000 
-    } 
-  }, 
-  replset: { 
-    socketOptions: { 
-      keepAlive: 300000, 
-      connectTimeoutMS : 30000 
-    } 
-  } 
-};
-const urlmongo = "mongodb://u7rs6a1pnwqmkbs:ihvyP7tNM63lY5V6JIH7@b4pfr4tuuy0c6qe-"; 
-mongoose.connect(urlmongo, options);
+mongoose.connect( 'mongodb://u7rs6a1pnwqmkbs:ihvyP7tNM63lY5V6JIH7@b4pfr4tuuy0c6qe-',
+  {
+    useMongoClient: true,
+    poolSize: 2,
+    promiseLibrary: global.Promise
+  }
+);
 const db = mongoose.connection; 
 
 db.on('error', console.error.bind(console, 'Connection Error')); 
