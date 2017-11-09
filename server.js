@@ -18,15 +18,6 @@ MongoClient.connect(url, function(err, db) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
 
-const Schema = mongoose.Schema({
-    action: String, 
-    value: String, 
-    icon: String, 
-    img: String,
-    status: String   
-}); 
-
-const Button = mongoose.model('Button', Schema); 
 const router = express.Router(); 
 
 router.route('/')
