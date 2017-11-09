@@ -1,7 +1,6 @@
 const express = require('express');
 const port = 8080; 
 const mongoose = require('mongoose'); 
-mongoose.Promise = global.Promise;
 
 const promise = mongoose.connect(process.env.MONGODB_ADDON_URI, {
   useMongoClient: true,
