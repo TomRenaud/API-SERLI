@@ -1,14 +1,19 @@
 const express = require('express');
-const port = 8080;
+const port = process.env.PORT;
 const app = express(); 
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose'); 
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
-const promise = mongoose.connect(process.env.MONGODB_ADDON_URI, {
-  useMongoClient: true,
+// Connection URL
+const url = process.env.MONGODB_ADDON_URI;
+
+// Use connect method to connect to the server
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+  db.close();
 });
-
-const db = mongoose.connection; 
 
 db.on('error', console.error.bind(console, 'Connection Error')); 
 db.once('open', function (){
