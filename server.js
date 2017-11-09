@@ -1,7 +1,8 @@
 const express = require('express');
 const port = 8080; 
 const mongoose = require('mongoose'); 
-const options = { 
+const options = {
+  useMongoClient: true, 
   server: { 
     socketOptions: { 
       keepAlive: 300000, 
