@@ -1,13 +1,9 @@
 const express = require('express');
 const port = 8080; 
 const mongoose = require('mongoose'); 
-mongoose.connect(process.env.MONGODB_ADDON_URI,
-  {
-    useMongoClient: true,
-    poolSize: 2,
-    promiseLibrary: global.Promise
-  }
-);
+
+mongoose.connect(process.env.MONGODB_ADDON_URI,{ useMongoClient: true });
+
 const db = mongoose.connection; 
 
 db.on('error', console.error.bind(console, 'Connection Error')); 
