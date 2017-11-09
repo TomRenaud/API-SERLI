@@ -15,11 +15,6 @@ MongoClient.connect(url, function(err, db) {
   db.close();
 });
 
-db.on('error', console.error.bind(console, 'Connection Error')); 
-db.once('open', function (){
-    console.log("DB Connection OK"); 
-});
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
 
