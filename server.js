@@ -1,5 +1,7 @@
 const express = require('express');
-const port = 8080; 
+const port = 8080;
+const app = express(); 
+const bodyParser = require("body-parser");
 const mongoose = require('mongoose'); 
 
 const promise = mongoose.connect(process.env.MONGODB_ADDON_URI, {
@@ -13,11 +15,8 @@ db.once('open', function (){
     console.log("DB Connection OK"); 
 });
 
-const app = express(); 
-const bodyParser = require("body-parser");
-
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 
 const Schema = mongoose.Schema({
     action: String, 
