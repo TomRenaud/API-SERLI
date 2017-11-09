@@ -12,8 +12,29 @@ const url = process.env.MONGODB_ADDON_URI;
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
   console.log("Connected successfully to server");
-  db.close();
+  
+  insertDocuments(db, function() {
+    db.close();
+  });
+
 });
+
+const insertDocuments = function(db, callback) {
+  // Get the documents collection
+  var collection = db.collection('buttons');
+  // Insert some documents
+  collection.insertMany([
+    {
+      action : 'Message Slack',
+      value: 'Hello World',
+      icon: 'add',
+      img: 'http://...',
+      status: 'offline'
+    }
+  ], function(err, result) {
+    callback(result);
+  });
+};
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
