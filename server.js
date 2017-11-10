@@ -55,11 +55,12 @@ router.route('/')
 router.route('/api/buttons')
 .get(function(req,res){ 
 	// Use connect method to connect to the server
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url, function(err, db, res) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
     
-    findDocuments(db, function() {
+    findDocuments(db, function(docs, res) {
+      res.json(docs);
       db.close();
     });
   });
