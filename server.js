@@ -9,9 +9,9 @@ const assert = require('assert');
 const url = process.env.MONGODB_ADDON_URI;
 
 const insertDocuments = function(db, callback) {
-  // Get the documents collection
+  // Get the buttons collection
   const collection = db.collection('buttons');
-  // Insert some documents
+  
   collection.insertMany([
     {
       action : 'Message Slack',
@@ -29,10 +29,10 @@ const insertDocuments = function(db, callback) {
   });
 };
 
-const findDocuments = function(db, callback) {
-  // Get the documents collection
+const findDocuments = function(db, res, callback) {
+  // Get the buttons collection
   const collection = db.collection('buttons');
-  // Find some buttons
+  // Find all buttons
   collection.find({}).toArray(function(err, docs) {
     assert.equal(err, null);
     console.log("Found the following records");
@@ -58,13 +58,13 @@ router.route('/api/buttons')
   MongoClient.connect(url, function(err, db, res) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
-    
-    findDocuments(db, function(docs, res) {
-      res.json(docs);
+    console.log('res',res);
+    findDocuments(db, res, function(docs) {
+      res.json({ res: 'ok' });
       db.close();
     });
   });
-})
+});
 
 // create new button
 .post(function(req,res){
@@ -91,7 +91,7 @@ router.route('/api/buttons/:buttonId')
         res.send(err);
     res.json(button);
   });
-})
+});
 
 // update button byId
 .put(function(req,res){ 
@@ -111,7 +111,7 @@ router.route('/api/buttons/:buttonId')
       res.json({message : 'UPDATE OK'});
     });                
   });
-})
+});
 
 // remove button byId
 .delete(function(req,res){ 
