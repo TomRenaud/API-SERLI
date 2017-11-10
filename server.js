@@ -49,7 +49,7 @@ const router = express.Router();
 router.route('/')
 .all(function(req,res){ 
       res.json({message : "Bienvenue sur API Serli Button", methode : req.method});
-});
+})
   
 // get all buttons  
 router.route('/api/buttons')
@@ -64,7 +64,7 @@ router.route('/api/buttons')
       db.close();
     });
   });
-});
+})
 
 // create new button
 .post(function(req,res){
@@ -80,7 +80,7 @@ router.route('/api/buttons')
         }
         res.json({ message : 'INSERT OK' });
       }); 
-});
+})
 
 
 // get button byId
@@ -91,7 +91,7 @@ router.route('/api/buttons/:buttonId')
         res.send(err);
     res.json(button);
   });
-});
+})
 
 // update button byId
 .put(function(req,res){ 
@@ -111,7 +111,7 @@ router.route('/api/buttons/:buttonId')
       res.json({message : 'UPDATE OK'});
     });                
   });
-});
+})
 
 // remove button byId
 .delete(function(req,res){ 
@@ -121,7 +121,7 @@ router.route('/api/buttons/:buttonId')
     }
     res.json({message:"DELETE OK"}); 
   });     
-});
+})
 
 app.use(router);
 
