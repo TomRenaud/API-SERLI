@@ -29,14 +29,14 @@ const insertDocuments = function(db, callback) {
   });
 };
 
-const findDocuments = function(db, res, callback) {
+const findDocuments = function(db, callback) {
   // Get the buttons collection
   const collection = db.collection('buttons');
   // Find all buttons
   collection.find({}).toArray(function(err, docs) {
     assert.equal(err, null);
     console.log("Found the following records");
-    console.log(docs)
+    console.log(docs);
     callback(docs);
   });
 };
@@ -55,12 +55,12 @@ router.route('/')
 router.route('/api/buttons')
 .get(function(req,res){ 
 	// Use connect method to connect to the server
-  MongoClient.connect(url, function(err, db, res) {
+  MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
-    console.log('res',res);
-    findDocuments(db, res, function(docs) {
-      res.json({ res: 'ok' });
+    
+    findDocuments(db, function(buttons) {
+      console.log('buttons', buttons);
       db.close();
     });
   });
