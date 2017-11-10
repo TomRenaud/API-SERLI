@@ -8,17 +8,17 @@ const assert = require('assert');
 // Connection URL
 const url = process.env.MONGODB_ADDON_URI;
 
-const insertDocuments = function(db, callback) {
+const insertDocuments = function(db, req, callback) {
   // Get the buttons collection
   const collection = db.collection('buttons');
   
   collection.insertMany([
     {
-      action : 'Message Slack',
-      value: 'Hello World',
-      icon: 'add',
-      img: 'http://...',
-      status: 'online'
+      action : req.body.action,
+      value: req.body.value,
+      icon: req.body.icon,
+      img: req.body.img,
+      status: req.body.status
     }
   ], function(err, result) {
     assert.equal(err, null);
@@ -68,18 +68,16 @@ router.route('/api/buttons')
 
 // create new button
 .post(function(req,res){
-      var button = new Button();
-      button.action = req.body.nom;
-      button.value = req.body.adresse;
-      button.icon = req.body.tel;
-      button.img = req.body.description; 
-      button.status = req.body.status; 
-      button.save(function(err){
-        if(err){
-          res.send(err);
-        }
-        res.json({ message : 'INSERT OK' });
-      }); 
+  // Use connect method to connect to the server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected successfully to server");
+    
+    insertDocuments(db, req, function(result) {
+      res.json(result);
+      db.close();
+    });
+  });
 })
 
 
