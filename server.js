@@ -32,6 +32,8 @@ const url = process.env.MONGODB_ADDON_URI;
 const addButton = function(db, req, callback) {
 
   const collection = db.collection('buttons');
+
+  console.log('req',req.body);
   
   collection.insertMany([
     {
