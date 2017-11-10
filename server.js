@@ -33,7 +33,7 @@ const addButton = function(db, req, callback) {
 
   const collection = db.collection('buttons');
 
-  console.log('req',req.body);
+  console.log('req',req.body.tag);
   
   collection.insertMany([
     {
