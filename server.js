@@ -6,7 +6,11 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const connect = require('connect'); 
 
-app.use(connect.bodyParser());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Add headers
 app.use(function (req, res, next) {
