@@ -60,7 +60,7 @@ router.route('/api/buttons')
     console.log("Connected successfully to server");
     
     findDocuments(db, function(buttons) {
-      console.log('buttons', buttons);
+      res.json(buttons);
       db.close();
     });
   });
