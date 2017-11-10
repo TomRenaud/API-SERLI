@@ -4,8 +4,9 @@ const app = express();
 const bodyParser = require("body-parser");
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const connect = require('connect'); 
 
-app.use(require('connect').bodyParser());
+app.use(connect.bodyParser());
 
 // Add headers
 app.use(function (req, res, next) {
