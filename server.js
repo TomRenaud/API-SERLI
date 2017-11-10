@@ -8,20 +8,9 @@ const assert = require('assert');
 // Connection URL
 const url = process.env.MONGODB_ADDON_URI;
 
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-  
-  insertDocuments(db, function() {
-    db.close();
-  });
-
-});
-
 const insertDocuments = function(db, callback) {
   // Get the documents collection
-  var collection = db.collection('buttons');
+  const collection = db.collection('buttons');
   // Insert some documents
   collection.insertMany([
     {
@@ -29,10 +18,26 @@ const insertDocuments = function(db, callback) {
       value: 'Hello World',
       icon: 'add',
       img: 'http://...',
-      status: 'offline'
+      status: 'online'
     }
   ], function(err, result) {
+    assert.equal(err, null);
+    assert.equal(1, result.result.n);
+    assert.equal(1, result.ops.length);
+    console.log("Inserted 1 button");
     callback(result);
+  });
+};
+
+const findDocuments = function(db, callback) {
+  // Get the documents collection
+  const collection = db.collection('buttons');
+  // Find some buttons
+  collection.find({}).toArray(function(err, docs) {
+    assert.equal(err, null);
+    console.log("Found the following records");
+    console.log(docs)
+    callback(docs);
   });
 };
 
@@ -49,12 +54,15 @@ router.route('/')
 // get all buttons  
 router.route('/api/buttons')
 .get(function(req,res){ 
-	Button.find(function(err, buttons){
-        if (err){
-            res.send(err); 
-        }
-        res.json(buttons);  
-    }); 
+	// Use connect method to connect to the server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected successfully to server");
+    
+    findDocuments(db, function() {
+      db.close();
+    });
+  });
 })
 
 // create new button
