@@ -103,16 +103,14 @@ const updateButton = function(db, req, callback) {
 
 // DELETE BUTTON
 const removeButton = function(db, req, callback) {
-
-  console.log(req.params.buttonTagId);
   
-  /*const collection = db.collection('buttons');
+  const collection = db.collection('buttons');
   
     collection.deleteOne({ tag : req.params.buttonTagId }, function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
     callback(result);
-  });*/    
+  });    
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
