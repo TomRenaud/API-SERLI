@@ -180,6 +180,11 @@ router.route('/api/buttons/:buttonTagId')
   });
 });
 
+router.route('/api/button/:buttonTagId')
+.get(function(req,res){ 
+  console.log(req.params.buttonTagId);
+})
+
 app.use(router);
 
 app.listen(port);
