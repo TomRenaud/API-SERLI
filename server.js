@@ -130,7 +130,9 @@ const sendMessageToSlack = function(button) {
   request.post({
       url:'https://hooks.slack.com/services/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',
       body: JSON.stringify({
-        "text": button[0].value
+        "text" : button[0].value,
+        "username" : "SERLI BUTTON",
+        "icon_emoji" : ":ghost:"
       }),
       }, 
       function(error, response, body){
