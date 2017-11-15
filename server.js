@@ -88,7 +88,7 @@ const callButton = function(db, req, callback) {
   const collection = db.collection('buttons');
 
   collection.find({'tag': req.params.buttonTagId}).toArray(function(err, docs) {
-    console.log('docs',docs);
+    console.log('docs',docs[0].action);
     assert.equal(err, null);
     callback(docs);
   });  
