@@ -130,7 +130,7 @@ const sendMessageToSlack = function(button) {
 
   console.log(button);
 
-  request.post({
+  /*request.post({
       url:'https://hooks.slack.com/services/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',
       body: JSON.stringify({
         "text": "test"
@@ -141,7 +141,7 @@ const sendMessageToSlack = function(button) {
         console.log(error);
       }
       console.log(body);
-  });
+  });*/
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -217,7 +217,9 @@ router.route('/api/button/:buttonTagId')
     assert.equal(null, err);
     // EXECUTE BUTTON ACTION 
     callButton(db, req, function(result) {
-      console.log(result.action);
+
+      console.log("action",result.action);
+
       switch (result.action) {
         case 'Message Slack':
           sendMessageToSlack(result);
@@ -226,6 +228,7 @@ router.route('/api/button/:buttonTagId')
           sendMessageToSlack(result);
           break;
       }
+
       db.close();
     });
   });
