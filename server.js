@@ -128,14 +128,16 @@ const removeButton = function(db, req, callback) {
 
 // SEND MESSAGE TO SLACK
 const sendMessageToSlack = function(button) {
+
+  console.log(button);
   
-  const payload = { "text" : button.value }
+  /*const payload = { "text" : button.value }
   payload = JSON.stringify(payload);
 
   request.post({ url : webhook, payload : payload }, function(err, res){
       if(err){console.log(err)}
       if(res){console.log(res.body)}
-  });
+  });*/
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -209,7 +211,7 @@ router.route('/api/button/:buttonTagId')
 .get(function(req,res){ 
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
-    // REMOVE BUTTON BY TAG
+    // EXECUTE BUTTON ACTION 
     callButton(db, req, function(result) {
       switch (result.action) {
         case 'Message Slack':
