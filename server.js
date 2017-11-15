@@ -127,18 +127,19 @@ const removeButton = function(db, req, callback) {
 
 // SEND MESSAGE TO SLACK
 const sendMessageToSlack = function(button) {
+  
+  const options = {
+    uri: "https://hooks.slack.com/services/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",
+    form: '{ "text" : button.value }'
+  };
 
-  console.log(button);
-
-  const webhook = "https://hooks.slack.com/services/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";
-  const payload = { "text" : button.value }
-  payload = JSON.stringify(payload);
-  const headers = { "Content-type" : "application/json" }
-
-  request.post({url: webhook, payload: payload, headers: headers}, function(err, res){
-      if(err){console.log(err)}
-      if(res){console.log(res.body)}
-  })
+  request.post(options, function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body.name);
+    } else {
+      console.log('error: '+ response.statusCode + body);
+    }
+  });
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
