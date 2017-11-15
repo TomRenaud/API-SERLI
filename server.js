@@ -132,6 +132,7 @@ const sendMessageToSlack = function(button) {
 
   const webhook = "https://hooks.slack.com/services/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";
   const payload = { "text" : button.value }
+  payload = JSON.stringify(payload);
   const headers = { "Content-type" : "application/json" }
 
   request.post({url: webhook, payload: payload, headers: headers}, function(err, res){
