@@ -127,18 +127,18 @@ const removeButton = function(db, req, callback) {
 
 // SEND MESSAGE TO SLACK
 const sendMessageToSlack = function(button) {
-  
-  const options = {
-    uri: "https://hooks.slack.com/services/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",
-    form: '{ "text" : button.value }'
-  };
 
-  request.post(options, function(error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body.name);
-    } else {
-      console.log('error: '+ response.statusCode + body);
-    }
+  request.post({
+      url:'https://hooks.slack.com/services/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',
+      body: JSON.stringify({
+        "text": button.value
+      }),
+      }, 
+      function(error, response, body){
+      if(error){
+        console.log(error);
+      }
+      console.log(body);
   });
 };
 
