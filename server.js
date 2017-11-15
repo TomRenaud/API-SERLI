@@ -6,7 +6,6 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const connect = require('connect'); 
 const request = require('request');
-const webhook = "https://hooks.slack.com/services/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";
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -130,14 +129,15 @@ const removeButton = function(db, req, callback) {
 const sendMessageToSlack = function(button) {
 
   console.log(button);
-  
-  /*const payload = { "text" : button.value }
-  payload = JSON.stringify(payload);
 
-  request.post({ url : webhook, payload : payload }, function(err, res){
+  const webhook = "https://hooks.slack.com/services/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";
+  const payload = { "text" : button.value }
+  const headers = { "Content-type" : "application/json" }
+
+  request.post({url: webhook, payload: payload, headers: headers}, function(err, res){
       if(err){console.log(err)}
       if(res){console.log(res.body)}
-  });*/
+  })
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
