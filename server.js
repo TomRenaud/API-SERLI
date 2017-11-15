@@ -128,8 +128,7 @@ const removeButton = function(db, req, callback) {
 // SEND MESSAGE TO SLACK
 const sendMessageToSlack = function(button) {
 
-  const message = button.value;
-  console.log(message);
+  console.log(button);
 
   request.post({
       url:'https://hooks.slack.com/services/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',
