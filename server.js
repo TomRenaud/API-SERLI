@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const connect = require('connect'); 
+const request = require('request');
+const webhook = "https://hooks.slack.com/services/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";
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -81,6 +83,17 @@ const findButtonByTag = function(db, req, callback) {
   });      
 };
 
+// CALL BUTTON
+const callButton = function(db, req, callback) {
+
+  const collection = db.collection('buttons');
+
+  collection.find({'tag': req.params.buttonTagId}).toArray(function(err, docs) {
+    assert.equal(err, null);
+    callback(docs);
+  });  
+}
+
 // UPDATE BUTTON 
 const updateButton = function(db, req, callback) {
   
@@ -111,6 +124,18 @@ const removeButton = function(db, req, callback) {
     assert.equal(1, result.result.n);
     callback(result);
   });    
+};
+
+// SEND MESSAGE TO SLACK
+const sendMessageToSlack = function(button) {
+  
+  const payload = { "text" : button.value }
+  payload = JSON.stringify(payload);
+
+  request.post({ url : webhook, payload : payload }, function(err, res){
+      if(err){console.log(err)}
+      if(res){console.log(res.body)}
+  });
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -170,7 +195,7 @@ router.route('/api/buttons/:buttonTagId')
 })
 
 .delete(function(req,res){ 
-    MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     // REMOVE BUTTON BY TAG
     removeButton(db, req, function(result) {
@@ -182,7 +207,21 @@ router.route('/api/buttons/:buttonTagId')
 
 router.route('/api/button/:buttonTagId')
 .get(function(req,res){ 
-  console.log(req.params.buttonTagId);
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    // REMOVE BUTTON BY TAG
+    callButton(db, req, function(result) {
+      switch (result.action) {
+        case 'Message Slack':
+          sendMessageToSlack(result);
+          break;
+        default:
+          sendMessageToSlack(result);
+          break;
+      }
+      db.close();
+    });
+  });
 })
 
 app.use(router);
