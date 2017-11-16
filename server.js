@@ -99,7 +99,8 @@ const updateButton = function(db, req, callback) {
   const collection = db.collection('buttons');
   
   collection.updateOne({ tag : req.params.buttonTagId }
-    , { $set: { 
+    , { $set: {
+          tag: req.body.tag,
           action : req.body.action,
           value: req.body.value,
           icon: req.body.icon,
