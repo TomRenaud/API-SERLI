@@ -217,7 +217,6 @@ router.route('/api/button/:buttonTagId')
     assert.equal(null, err);
     // EXECUTE BUTTON ACTION 
     callButton(db, req, function(result) {
-      console.log(result[0].action);
       switch (result[0].action) {
         case 'Message Slack':
           sendMessageToSlack(result);
