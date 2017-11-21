@@ -47,6 +47,7 @@ const addButton = function(db, req, callback) {
     {
       tag: req.body.tag,
       action : req.body.action,
+      sound : req.body.sound,
       value: req.body.value,
       icon: req.body.icon,
       img: req.body.img,
@@ -102,6 +103,7 @@ const updateButton = function(db, req, callback) {
     , { $set: {
           tag: req.body.tag,
           action : req.body.action,
+          sound : req.body.sound,
           value: req.body.value,
           icon: req.body.icon,
           img: req.body.img,
@@ -221,6 +223,8 @@ router.route('/api/button/:buttonTagId')
         case 'Message Slack':
           sendMessageToSlack(result);
           break;
+        case 'Play sound':
+          res.json(result);  
         default:
           sendMessageToSlack(result);
           break;
