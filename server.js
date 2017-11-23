@@ -224,8 +224,7 @@ router.route('/api/button/:buttonTagId')
           sendMessageToSlack(result);
           break;
         case 'Play sound':
-          res.json(result);
-          res.sendStatus(200);  
+          res.json(result); 
           break;
       }
       db.close();
