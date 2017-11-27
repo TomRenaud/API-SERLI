@@ -152,7 +152,7 @@ const soundBoxList = function(callback) {
       if(error){
         console.log(error);
       }
-      callback(body);
+      callback(response);
   });
 };
 
