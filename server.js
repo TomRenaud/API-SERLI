@@ -152,7 +152,7 @@ const soundBoxList = function(callback) {
       if(err){
         console.log(err);
       }
-      callback(result);
+      console.log(result);
   });
 };
 
@@ -169,7 +169,7 @@ router.route('/')
 router.route('/api/sounds')
 .get(function(req,res){
   soundBoxList(function(result) {
-    res.json(result);
+    //res.json(result);
   });
 })
   
