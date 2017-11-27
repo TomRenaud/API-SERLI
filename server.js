@@ -148,11 +148,11 @@ const sendMessageToSlack = function(button) {
 
 // GET LIST OF SOUNDS
 const soundBoxList = function(callback) {
-  request.get('https://soundbox.cleverapps.io/api/stats', function(err, result) {
+  request.get('https://soundbox.cleverapps.io/api/stats', function(err, response, body) {
       if(err){
         console.log(err);
       }
-      console.log(result);
+      callback(body);
   });
 };
 
@@ -169,7 +169,7 @@ router.route('/')
 router.route('/api/sounds')
 .get(function(req,res){
   soundBoxList(function(result) {
-    //res.json(result);
+    res.json(result);
   });
 })
   
