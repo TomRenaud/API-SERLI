@@ -148,11 +148,11 @@ const sendMessageToSlack = function(button) {
 
 // GET LIST OF SOUNDS
 const soundBoxList = function(callback) {
-  request.get('https://soundbox.cleverapps.io/api/stats', function(error, response, body) {
-      if(error){
-        console.log(error);
+  request.get('https://soundbox.cleverapps.io/api/stats', function(err, result) {
+      if(err){
+        console.log(err);
       }
-      callback(response);
+      callback(result);
   });
 };
 
