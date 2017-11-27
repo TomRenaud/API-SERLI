@@ -169,7 +169,7 @@ router.route('/')
 router.route('/api/sounds')
 .get(function(req,res){
   soundBoxList(function(result) {
-    res.json(result);
+    res.send(result);
   });
 })
   
