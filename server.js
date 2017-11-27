@@ -146,6 +146,17 @@ const sendMessageToSlack = function(button) {
   });
 };
 
+// GET LIST OF SOUNDS
+const soundBoxList = function(callback) {
+  request.get('https://soundbox.cleverapps.io/api/stats')
+  .on('response', function(response) {
+    callback(response);
+  })
+  .on('error', function(err) {
+    console.log(err);
+  })
+};
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
 
@@ -154,6 +165,13 @@ const router = express.Router();
 router.route('/')
 .all(function(req,res){ 
       res.json({ message : "API Serli Button" });
+})
+
+router.route('/api/sounds')
+.get(function(req,res){
+  soundBoxList(function(result) {
+    res.json(result);
+  });
 })
   
 router.route('/api/buttons')
