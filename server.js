@@ -243,7 +243,7 @@ router.route('/api/button/:buttonTagId')
         case 'Play sound':
           res.json(result); 
           break;
-        case 'Say something':
+        case 'Say':
           res.json(result); 
           break;
       }
